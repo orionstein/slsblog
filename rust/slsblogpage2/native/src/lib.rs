@@ -29,6 +29,7 @@ fn build(call: Call) -> JsResult<JsString> {
     let postDataC = markdown::to_html(qq);
     let v = &postDataC[..];
     let un = unescape(v);
+    println!("{:?}", un);
     let mut handlebars = Handlebars::new();
 
     for entry in glob("./templates/**/*.hbs").expect("Failed to read glob pattern") { 
