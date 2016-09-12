@@ -1,5 +1,5 @@
 'use strict';
-var blogmain = require('../shared/main.node');
+var blogmain = require('../shared/test.node');
 
 // Your first function handler
 module.exports.main = (event, context, cb) => {
@@ -22,7 +22,7 @@ module.exports.main = (event, context, cb) => {
       
   ];
 
-  var html = blogmain.build(posts);
+  var html = blogmain.build();
   context.succeed(html);
 };
 
