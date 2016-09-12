@@ -1,0 +1,13 @@
+[package]
+name = "slsblog"
+version = "0.1.0"
+authors = ["ec2-user"]
+license = "MIT"
+
+[lib]
+name = "slsblog"
+crate-type = ["dylib"]
+
+[dependencies]
+neon = "0.1"
+horrorshow = "0.5.6"
