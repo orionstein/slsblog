@@ -1,10 +1,11 @@
 'use strict';
-var blogmain = require('../shared/test.node');
+let blogmain = require('../shared/test2.node');
+let config = require('../templates/config.json');
 
 // Your first function handler
 module.exports.main = (event, context, cb) => {
 
-  var posts = [
+  let posts = [
     {
       id: '123',
       title: 'New Post',
@@ -19,10 +20,10 @@ module.exports.main = (event, context, cb) => {
       snippet: 'Back in March, I [gave a presentation](/refi/) at Redisconf.<br /><br />Here is the video! In hindsight...',
       url: 'new_post'
     }
-      
   ];
+  console.log(config.blog);
 
-  var html = blogmain.build();
+  var html = blogmain.build(config.blog, posts);
   context.succeed(html);
 };
 

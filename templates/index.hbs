@@ -1,7 +1,17 @@
 {{#partial page}}
-  <p>Rendered in partial, parent is {{parent}}<p>
-  <p>123</p>
-  {{~> partial1~}}
+  <main class="content" role="main">
+    {{#each posts}}
+      <article class="preview">
+          <header>
+              <h1 class="post-title"><a href="{{url}}">{{{title}}}</a></h1>
+              <div class="post-meta"><time datetime="{{date}}">{{date}}</time></div>
+          </header>
+          <section class="post-excerpt">
+            <a class="excerptlink" href="{{url}}"><p>{{snippet}}&hellip;</p></a>
+            <p class="readmore"><a href="{{url}}">Keep reading <i class="fa fa-angle-double-right" style="padding-left: 5px;"></i></a></p>
+          </section>
+      </article>
+      {{/each~}}
+  </main>
 {{/partial}}
-{{! remove whitespaces with ~ }}
 {{~> layout~}}
