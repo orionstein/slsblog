@@ -53,16 +53,44 @@ fn build(call: Call) -> JsResult<JsString> {
     for post in &postIter {
       let mut postData: BTreeMap<String, Json> = BTreeMap::new();
       let postObj: Handle<JsObject> = try!(post.check::<JsObject>());
+      
+      //ID
       let id = try!((postObj).get(scope, "id"));
       let ids = try!(JsValue::to_string((*id), scope));
       let ide = (*ids).value();
+
+      //TITLE
       let title = try!((postObj).get(scope, "title"));
       let titles = try!(JsValue::to_string((*title), scope));
       let titlee = (*titles).value();
+   
+      //URL
+      let url = try!((postObj).get(scope, "url"));
+      let urls = try!(JsValue::to_string((*url), scope));
+      let urle = (*urls).value();
+
+      //SNIPPET
+      let snippet = try!((postObj).get(scope, "snippet"));
+      let snippets = try!(JsValue::to_string((*snippet), scope));
+      let snippete = (*snippets).value();
+
+      //DATE
+      let date = try!((postObj).get(scope, "date"));
+      let dates = try!(JsValue::to_string((*date), scope));
+      let datee = (*dates).value();
+
       println!("{:?}", ide);
       println!("{:?}", titlee);
+      println!("{:?}", urle);
+      println!("{:?}", snippete);
+      println!("{:?}", datee);
+
       postData.insert("id".to_string(), ide.to_json());
       postData.insert("title".to_string(), titlee.to_json());
+      postData.insert("url".to_string(), urle.to_json());
+      postData.insert("snippet".to_string(), snippete.to_json());
+      postData.insert("date".to_string(), datee.to_json());
+
       postArrData.push(postData.to_json());
     }
 
