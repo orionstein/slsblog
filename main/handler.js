@@ -11,14 +11,14 @@ module.exports.main = (event, context, cb) => {
       title: 'New Post',
       date: new Date(),
       snippet: 'Meadfee...',
-      url: 'new_post'
+      url: ''
     },
     {
       id: '124',
       title: 'Presentation',
       date: new Date(),
       snippet: 'Back in March, I [gave a presentation](/refi/) at Redisconf.<br /><br />Here is the video! In hindsight...',
-      url: 'new_post'
+      url: ''
     }
   ];
   console.log(config.blog);

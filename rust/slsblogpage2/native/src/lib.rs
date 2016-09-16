@@ -44,9 +44,31 @@ fn build(call: Call) -> JsResult<JsString> {
 	    }
     }
 
+    let mut blogData: BTreeMap<String, Json> = BTreeMap::new();
+    let blog: Handle<JsObject> = try!(try!(call.arguments.require(scope, 0)).check::<JsObject>());
+    let blogItems = try!(blog.get_own_property_names(scope));
+    println!("bi {}", blogItems.len());
+    let blogItemIter = (blogItems).to_vec(scope);
+    for prop in &blogItemIter {
+      for entry in &*prop {
+        let nameString = try!(JsValue::to_string((**entry), scope));
+        let nameExtract = (*nameString).value();
+        let item = try!(blog.get(scope, nameString));
+        let bItem = try!(JsValue::to_string((*item), scope));
+        let bItemExtract = (*bItem).value();
+        println!("{:?}", nameExtract);
+        println!("{:?}", bItemExtract);
+        blogData.insert(nameExtract.to_string(), bItemExtract.to_json());
+      }
+    }
+
+    let mut postData: BTreeMap<String, Json> = BTreeMap::new();
+    postData.insert("title".to_string(), "base0".to_json());
+    postData.insert("content".to_string(), un.to_json());
+
     let mut data: BTreeMap<String, Json> = BTreeMap::new();
-    data.insert("title".to_string(), "base0".to_json());
-    data.insert("content".to_string(), un.to_json());
+    data.insert("blog".to_string(), blogData.to_json());
+    data.insert("post".to_string(), postData.to_json());
     let dataJson = data.to_json();
 
     let pageString = handlebars.render("page", &dataJson).ok().unwrap();

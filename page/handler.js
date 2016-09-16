@@ -11,7 +11,7 @@ module.exports.main = (event, context, cb) => {
     title: 'Presentation',
     tags: ['presentation', 'redis']
   };
-  var html = blogpage.build(post.content);
+  var html = blogpage.build(config, post.content);
   context.succeed(html);
 };
 

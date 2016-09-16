@@ -24,6 +24,15 @@
 
     {{~#block page}}{{/block~}}
 
+    <footer class="site-footer">
+        <div class="inner">
+            {{> footer-social}}
+            {{> footer-author}}
+            <section class="copyright">&copy; {{blog.date}} <a href="{{blog.url}}">{{blog.title}}</a>. All rights reserved</section>
+            <section><a href="https://github.com/epistrephein/Steam">Steam theme</a> for <a class="icon-ghost" href="http://ghost.org/"><span class="hidden">Ghost</span></a> by Tommaso Barbato</section>
+        </div>
+    </footer>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="//s3.amazonaws.com/file.notsafeforproduction.com/assets/js/index.js"></script>
 

@@ -37,11 +37,11 @@ provider:
 #  region: us-east-1
 
 # you can add packaging information here
-#package:
+package:
 #  include:
 #    - include-me.js
-#  exclude:
-#    - exclude-me.js
+  exclude:
+    - rust/
 #  artifact: my-service-code.zip
 
 functions:
@@ -61,7 +61,7 @@ functions:
     events:
       - http:
           method: GET
-          path: post
+          path: page/{id}
           response:
             headers:
               Content-Type: "'text/html'"
