@@ -1,0 +1,14 @@
+{
+  "name": "slsblog2",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "author": "ec2-user",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.1.7"
+  },
+  "scripts": {
+    "install": "neon build"
+  }
+}
