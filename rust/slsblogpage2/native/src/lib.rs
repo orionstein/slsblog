@@ -6,7 +6,7 @@ extern crate glob;
 extern crate markdown;
 use neon::vm::{Call, JsResult, Module};
 use neon::mem::Handle;
-use neon::js::{JsString, JsArray, Key, JsObject, Object, Value, JsInteger};
+use neon::js::{JsString, JsArray, Key, JsObject, JsValue, Object, Value, JsInteger};
 use std::path::Path;
 use handlebars::Handlebars;
 use std::collections::BTreeMap;
@@ -24,7 +24,7 @@ fn unescape(text: &str) -> String {
 fn build(call: Call) -> JsResult<JsString> {
     let scope = call.scope;
     let obj: Handle<JsObject> = JsObject::new(scope);
-    let postData = try!(try!(call.arguments.require(scope, 0)).check::<JsString>());
+    let postData = try!(try!(call.arguments.require(scope, 1)).check::<JsString>());
     let qq : &str = &postData.value()[..];
     let postDataC = markdown::to_html(qq);
     let v = &postDataC[..];

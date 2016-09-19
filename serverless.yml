@@ -77,9 +77,39 @@ functions:
 #      - sns: greeter-topic
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
+resources:
+  Resources:
+    PostTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "postId"
+            AttributeType: "N"
+        KeySchema:
+          - AttributeName: "postId"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        TableName: "slsblog-posts"
+    TagTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "tag"
+            AttributeType: "S"
+          - AttributeName: "postId"
+            AttributeType: "N"
+        KeySchema:
+          - AttributeName: "postId"
+            KeyType: "HASH"
+          - AttributeName: "tag"
+            KeyType: "RANGE"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        TableName: "slsblog-tags"
+
 #      Type: AWS::S3::Bucket
 #      Properties:
 #        BucketName: my-new-bucket

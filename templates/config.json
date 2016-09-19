@@ -4,5 +4,10 @@
     "url": "https://www.notsafeforproduction.com",
     "description": "Thoughts and musings not safe for Production",
     "date": "2016"
+  },
+  "database": {
+    "engine": "dynamodb",
+    "postTable": "nsfp-posts",
+    "tagTable": "nsfp-tags"
   }
 }

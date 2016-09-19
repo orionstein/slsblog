@@ -1,5 +1,5 @@
 'use strict';
-let blogmain = require('../shared/test2.node');
+let blogmain = require('../shared/bin/home.node');
 let config = require('../templates/config.json');
 
 // Your first function handler
@@ -21,7 +21,6 @@ module.exports.main = (event, context, cb) => {
       url: ''
     }
   ];
-  console.log(config.blog);
 
   var html = blogmain.build(config.blog, posts);
   context.succeed(html);

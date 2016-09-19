@@ -3,12 +3,12 @@
     {{#each posts}}
       <article class="preview">
           <header>
-              <h1 class="post-title"><a href="{{url}}">{{{title}}}</a></h1>
+              <h1 class="post-title"><a href="/page/{{url}}">{{{title}}}</a></h1>
               <div class="post-meta"><time datetime="{{date}}">{{date}}</time></div>
           </header>
           <section class="post-excerpt">
-            <a class="excerptlink" href="{{url}}"><p>{{snippet}}&hellip;</p></a>
-            <p class="readmore"><a href="{{url}}">Keep reading <i class="fa fa-angle-double-right" style="padding-left: 5px;"></i></a></p>
+            <a class="excerptlink" href="/page/{{url}}"><p>{{snippet}}&hellip;</p></a>
+            <p class="readmore"><a href="/page/{{url}}">Keep reading <i class="fa fa-angle-double-right" style="padding-left: 5px;"></i></a></p>
           </section>
       </article>
       {{/each~}}
