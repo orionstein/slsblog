@@ -1,0 +1,17 @@
+[package]
+name = "slsblog2"
+version = "0.1.0"
+authors = ["ec2-user"]
+license = "MIT"
+
+[lib]
+name = "slsblog2"
+crate-type = ["dylib"]
+
+[dependencies]
+neon = "0.1"
+handlebars = "0.20.5"
+rustc-serialize = "^0.3.15"
+glob = "*"
+markdown = "0.1"
+horrorshow = "0.5.6"
