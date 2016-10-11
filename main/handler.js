@@ -1,6 +1,6 @@
 'use strict';
 let blogmain = require('../shared/bin/home.node');
-let config = require('../templates/config.json');
+let config = require('../shared/config/config.json');
 
 // Your first function handler
 module.exports.main = (event, context, cb) => {

@@ -1,1 +1,8 @@
+.serverless/
 .serverless/*
+.serverless
+node_modules/
+node_modules
+admin/elm-stuff
+admin/elm-stuff/
+admin/elm-stuff/*
