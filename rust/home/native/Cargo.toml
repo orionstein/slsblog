@@ -1,15 +1,19 @@
 [package]
-name = "slsblog2"
+name = "home"
 version = "0.1.0"
-authors = ["ec2-user"]
+authors = ["Orion Free <orion@orionfree.com>"]
 license = "MIT"
+build = "build.rs"
 
 [lib]
-name = "slsblog2"
+name = "home"
 crate-type = ["dylib"]
 
+[build-dependencies]
+neon-build = "0.1.18"
+
 [dependencies]
-neon = "0.1"
-handlebars = "0.20.5"
-rustc-serialize = "^0.3.15"
+neon = "0.1.18"
+handlebars = "0.25.*"
+rustc-serialize = "*"
 glob = "*"

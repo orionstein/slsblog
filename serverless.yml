@@ -1,10 +1,11 @@
 # Happy Coding!
 
-service: slsblogpoc
+service: slsblog
 
 provider:
   name: aws
   runtime: nodejs4.3
+  # role: slsBlogLambdaRole
   apiKeys:
     - SLSBLOGKEY
 package:
@@ -18,7 +19,27 @@ functions:
     events:
       - http:
           method: GET
+          integration: lambda
+          path: /
+          response:
+            headers:
+              Content-Type: "'text/html'"
+            template: $input.path('$')
+      - http:
+          method: GET
+          integration: lambda
           path: home
+          response:
+            headers:
+              Content-Type: "'text/html'"
+            template: $input.path('$')
+  tags:
+    handler: tags/handler.main
+    events:
+      - http:
+          method: GET
+          integration: lambda
+          path: tag/{tagName}
           response:
             headers:
               Content-Type: "'text/html'"
@@ -28,64 +49,73 @@ functions:
     events:
       - http:
           method: GET
+          integration: lambda
           path: page/{id}
           response:
             headers:
               Content-Type: "'text/html'"
             template: $input.path('$')
-  new:
-    handler: new/handler.main
+  admin:
+    handler: admin/handler.main
     events:
       - http:
           method: GET
-          path: new
+          integration: lambda
+          path: admin
           response:
             headers:
               Content-Type: "'text/html'"
             template: $input.path('$')
+  adminCreate:
+    handler: admin/api/create/handler.main
+    events:
+      - http:
+          method: POST
+          integration: lambda
+          path: admin/create
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+          private: true
 
 resources:
   Resources:
-    AuthorTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: "Author"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "Author"
-            KeyType: "HASH"
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: "slsblog-authors"
-    TagTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: "Tag"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "Tag"
-            KeyType: "HASH"
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: "slsblog-tags"
+    # slsBlogLambdaRole:
+    #   Type: AWS::IAM::Role
+    #   Properties:
+    #     Path: /
+    #     RoleName: slsBlogLambdaRole
+    #     AssumeRolePolicyDocument:
+    #       Version: '2017'
+    #       Statement:
+    #         - Effect: Allow
+    #           Principal:
+    #             Service:
+    #               - lambda.amazonaws.com
+    #           Action: sts:AssumeRole
+    #     Policies:
+    #       - PolicyName: AmazonDynamoDBFullAccess
+    #       - PolicyName: AmazonS3FullAccess
     PostTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: "postId"
-            AttributeType: "N"
+            AttributeType: "S"
           - AttributeName: "Author"
             AttributeType: "S"
           - AttributeName: "Status"
             AttributeType: "S"
-          - AttributeName: "Snippet"
+          - AttributeName: "Url"
             AttributeType: "S"
-          - AttributeName: "Title"
-            AttributeType: "S"
+          - AttributeName: "Date"
+            AttributeType: "N"
         KeySchema:
           - AttributeName: "postId"
             KeyType: "HASH"
@@ -107,12 +137,31 @@ resources:
               NonKeyAttributes:
                 - "Snippet"
                 - "Title"
+                - "Url"
+                - "Date"
               ProjectionType: "INCLUDE"
-          - IndexName: "slsblog-status-index"
+          - IndexName: "slsblog-url-index"
+            KeySchema:
+              - AttributeName: "Url"
+                KeyType: "HASH"
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            Projection:
+              NonKeyAttributes:
+                - "Snippet"
+                - "Content"
+                - "Title"
+                - "Author"
+                - "postId"
+                - "Date"
+                - "Tags"
+              ProjectionType: "INCLUDE"
+          - IndexName: "slsblog-status-date-index"
             KeySchema:
               - AttributeName: "Status"
                 KeyType: "HASH"
-              - AttributeName: "postId"
+              - AttributeName: "Date"
                 KeyType: "RANGE"
             ProvisionedThroughput:
               ReadCapacityUnits: 1
@@ -121,4 +170,59 @@ resources:
               NonKeyAttributes:
                 - "Snippet"
                 - "Title"
+                - "Url"
+                - "postId"
               ProjectionType: "INCLUDE"
+    TagsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "tagName"
+            AttributeType: "S"
+          - AttributeName: "Date"
+            AttributeType: "N"
+        KeySchema:
+          - AttributeName: "tagName"
+            KeyType: "HASH"
+          - AttributeName: "Date"
+            KeyType: "RANGE"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: "slsblog-tags"
+    # TagsTable:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     AttributeDefinitions:
+    #       - AttributeName: "postId"
+    #         AttributeType: "S"
+    #       - AttributeName: "tagName"
+    #         AttributeType: "S"
+    #       - AttributeName: "Date"
+    #         AttributeType: "N"
+    #     KeySchema:
+    #       - AttributeName: "tagName"
+    #         KeyType: "HASH"
+    #       - AttributeName: "Date"
+    #         KeyType: "RANGE"
+    #     ProvisionedThroughput:
+    #       ReadCapacityUnits: 1
+    #       WriteCapacityUnits: 1
+    #     TableName: "slsblog-tags"
+    #     GlobalSecondaryIndexes:
+    #       - IndexName: "slsblog-status-tag-index"
+    #         KeySchema:
+    #           - AttributeName: "tagName"
+    #             KeyType: "HASH"
+    #           - AttributeName: "Date"
+    #             KeyType: "RANGE"
+    #         ProvisionedThroughput:
+    #           ReadCapacityUnits: 1
+    #           WriteCapacityUnits: 1
+    #         Projection:
+    #           NonKeyAttributes:
+    #             - "Snippet"
+    #             - "Title"
+    #             - "Url"
+    #             - "postId"
+    #           ProjectionType: "INCLUDE"

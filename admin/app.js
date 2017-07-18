@@ -1,0 +1,3 @@
+;(function() {
+  Elm.Main.fullscreen()
+})()

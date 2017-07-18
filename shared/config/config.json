@@ -7,7 +7,7 @@
   },
   "database": {
     "engine": "dynamodb",
-    "postTable": "nsfp-posts",
-    "tagTable": "nsfp-tags"
+    "postTable": "slsblog-posts",
+    "tagTable": "slsblog-tags"
   }
 }

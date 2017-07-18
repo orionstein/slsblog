@@ -1,0 +1,9 @@
+#!/bin/bash
+sudo yum update -y
+curl -sf https://static.rust-lang.org/rustup.sh | sudo sh
+curl --silent --location https://rpm.nodesource.com/setup_4.x | sudo bash -
+sudo yum install -y nodejs make gcc-c++ git curl
+sudo npm install -g npm
+sudo npm install -g neon neon-cli
+rm /home/ec2-user/.bash_profile
+cd /home/ec2-user && curl -SLO https://dl.dropboxusercontent.com/u/27183329/rustser/.bash_profile

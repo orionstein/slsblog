@@ -1,9 +1,461 @@
 <style type="text/css">
-    a, a:visited {color: #33cc99;}
-    .pagination a {color: #33cc99;}
-    .gist .gist-file .gist-meta a:visited {color: #33cc99 !important;}
 
-    a:focus, a:hover {color: #178b6b;}
-    h1.post-title a:focus, h1.post-title a:hover, h1.blog-title a:focus, h1.blog-title a:hover {color: #178b6b;}
-    .older-posts:hover, .newer-posts:hover {color: #178b6b;}
+/* === Core Styles === */
+body {
+  background-color: #ffffff;
+  color: #596364; /* darker color */
+  font-size: 15px;
+  font-weight: 100;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); /* prevent grey link highlight in iOS */
+}
+body * {
+  max-height: 1000000em;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+dt,
+dd {
+  font-family: "Merriweather", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+}
+h1,
+.post-meta {
+  text-align: left;
+}
+a,
+a:visited {
+  /*color: #33cc99;*/
+  text-decoration: none;
+  transition: color ease 0.7s;
+  -webkit-transition: color ease 0.7s;
+}
+a:focus,
+a:hover {
+  /*color: #178b6b;*/
+}
+p,
+li,
+dt,
+dd {
+  font-size: 17px;
+  font-weight: 100;
+  line-height: 28px;
+}
+dt {
+  font-weight: 400;
+}
+li {
+  padding-left: 0.8em;
+}
+pre {
+  font-family: Menlo, "Consolas", Courier, monospace;
+  color: #596364;
+  font-size: 1em;
+  line-height: 1.2em;
+  padding: 1em;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  background-color: #f7f7f7;
+}
+code {
+  font-family: Menlo, "Consolas", Courier, monospace;
+  font-size: 0.85em;
+  color: #596364;
+  background-color: #f7f7f7;
+  padding: 2px 4px;
+  line-height: 1.2em;
+}
+kbd {
+  display: inline-block;
+  margin-bottom: 0.4em;
+  padding: 1px 8px;
+  border: #ccc 1px solid;
+  color: #666;
+  text-shadow: #fff 0 1px 0;
+  font-size: 0.9em;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.2),
+      0 1px 0 0 #fff inset;
+}
+h1 {
+  color: #151515;
+  font-family: "Roboto Slab", "Merriweather", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 42px;
+  margin: 0;
+  padding: 0;
+}
+#site-head,
+article,
+article.preview,
+a.archive-link,
+.article-nav {
+  margin: 20px auto;
+  max-width: 600px;
+  width: 90%;
+}
+#site-head img {
+  max-width: 100%;
+}
+article.preview {
+  margin-bottom: 4em;
+}
+article.preview p.readmore {
+  font-family: "Open Sans Condensed", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  margin-top: 1em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+/* === Header === */
+#blog-logo {
+  display: block;
+  max-width: 100px;
+  margin: 50px auto 0;
+  text-align: center;
+}
+#blog-logo div.bloglogo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  -webkit-background-size: cover !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-color: #ffffff;
+}
+h1.blog-title,
+h2.blog-description {
+  text-align: left;
+}
+h1.blog-title {
+  font-size: 50px;
+  line-height: 52px;
+  margin-top: 80px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+h1.blog-subtitle {
+  font-size: 26px;
+  line-height: 32px;
+  margin-top: -8px;
+  margin-bottom: 85px;
+  margin-left: 1px;
+  padding: 0;
+}
+h2.blog-description {
+  border-bottom: 1px solid #ecf0f1;
+  border-top: 1px solid #ecf0f1;
+  margin-bottom: 2em;
+  padding: .5em 1em;
+  line-height: 1.2em;
+}
+section.footer-description {
+  margin-bottom: 1em;
+}
+header.article-header,
+header.page-header {
+  margin-bottom: 3em;
+}
+/* === Body === */
+section.author,
+section.share {
+  width: 100%;
+  text-align: left;
+  text-transform: none;
+}
+section.share {
+  margin-top: 1em;
+  border-top: 1px solid #ecf0f1;
+  border-bottom: 1px solid #ecf0f1;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  text-align: right;
+}
+section.author h4 {
+  margin: 0;
+  padding-top: 4px;
+  padding-left: 99px;
+}
+section.author p,
+section.share p {
+  padding: 0;
+  margin: 0;
+}
+section.author h4 {
+  font-family: "Roboto Slab", "Merriweather", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+section.author p.attr,
+section.share p.info {
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: uppercase;
+  font-family: "Open Sans Condensed", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+}
+section.share p.info.prompt {
+  top: -5px;
+  position: relative;
+}
+section.author p.attr {
+  margin-bottom: 2px;
+}
+section.share p.info {
+  display: inline-block;
+}
+section.author p.bio {
+  font-size: 14px;
+  margin-left: 99px;
+  line-height: 1.2em;
+}
+blockquote {
+  font-family: "Open Sans Condensed", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  font-size: 1.6em;
+  font-weight: 300;
+  line-height: 1.2em;
+  font-style: italic;
+  text-transform: uppercase;
+  border-left: 0.4em solid rgba(0, 0, 0, 0.05);
+  margin-left: 1em;
+  padding-right: 1.5em;
+  padding-left: 1em;
+}
+.post-meta {
+  color: #95a5a6;
+  font-family: "Open Sans Condensed", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  margin-top: 0.3em;
+  text-transform: uppercase;
+}
+.tags {
+  font-size: 16px;
+  margin-bottom: 0.5em;
+}
+div.authorimage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -webkit-background-size: cover !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  margin-right: 17px;
+  float: left;
+}
+h1.post-title {
+  margin-top: 35px;
+}
+h1.post-title a,
+h1.blog-title a {
+  color: #151515;
+  transition: color ease 0.7s;
+  -webkit-transition: color ease 0.7s;
+}
+h1.post-title a:focus,
+h1.post-title a:hover,
+h1.blog-title a:focus,
+h1.blog-title a:hover {
+  /*color: #178b6b;*/
+  text-decoration: none;
+}
+section.post-content img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+section.preview.archive h2 {
+  text-align: left;
+}
+section.author {
+  overflow: hidden;
+}
+img.userimage {
+  width: 70px;
+  max-width: 70px;
+  max-height: 70px;
+  border-radius: 50%;
+  margin-right: 10px;
+  float: left;
+}
+/* === Footer === */
+footer {
+  background: rgba(0, 0, 0, 0.05);
+  margin: 4em 0 0;
+  padding: 2em 0;
+  text-align: center;
+}
+footer section {
+  font-family: "Open Sans Condensed", "Open Sans", "Helvetica Neue", Helvetica, Arial, "Nimbus L", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  margin: 0 auto;
+  max-width: 600px;
+  text-transform: uppercase;
+  width: 90%;
+}
+footer.post-footer {
+  background: none;
+  /*border-top: 1px solid #ecf0f1;*/
+  margin-top: 1em;
+}
+  /*
+
+  github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+  modified for Steam (https://github.com/epistrephein/Steam) by Tommaso Barbato (https://github.com/epistrephein)
+
+  */
+
+  .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #596364;
+    background: #f7f7f7;
+    -webkit-text-size-adjust: none;
+  }
+
+  .hljs-comment,
+  .diff .hljs-header {
+    color: #998;
+    font-style: italic;
+  }
+
+  .hljs-keyword,
+  .css .rule .hljs-keyword,
+  .hljs-winutils,
+  .nginx .hljs-title,
+  .hljs-subst,
+  .hljs-request,
+  .hljs-status {
+    color: #596364;
+    font-weight: bold;
+  }
+
+  .hljs-number,
+  .hljs-hexcolor,
+  .ruby .hljs-constant {
+    color: #008080;
+  }
+
+  .hljs-string,
+  .hljs-tag .hljs-value,
+  .hljs-doctag,
+  .tex .hljs-formula {
+    color: #d14;
+  }
+
+  .hljs-title,
+  .hljs-id,
+  .scss .hljs-preprocessor {
+    color: #900;
+    font-weight: bold;
+  }
+
+  .hljs-list .hljs-keyword,
+  .hljs-subst {
+    font-weight: normal;
+  }
+
+  .hljs-class .hljs-title,
+  .hljs-type,
+  .vhdl .hljs-literal,
+  .tex .hljs-command {
+    color: #458;
+    font-weight: bold;
+  }
+
+  .hljs-tag,
+  .hljs-tag .hljs-title,
+  .hljs-rule .hljs-property,
+  .django .hljs-tag .hljs-keyword {
+    color: #000080;
+    font-weight: normal;
+  }
+
+  .hljs-attribute,
+  .hljs-variable,
+  .lisp .hljs-body,
+  .hljs-name {
+    color: #008080;
+  }
+
+  .hljs-regexp {
+    color: #009926;
+  }
+
+  .hljs-symbol,
+  .ruby .hljs-symbol .hljs-string,
+  .lisp .hljs-keyword,
+  .clojure .hljs-keyword,
+  .scheme .hljs-keyword,
+  .tex .hljs-special,
+  .hljs-prompt {
+    color: #990073;
+  }
+
+  .hljs-built_in {
+    color: #0086b3;
+  }
+
+  .hljs-preprocessor,
+  .hljs-pragma,
+  .hljs-pi,
+  .hljs-doctype,
+  .hljs-shebang,
+  .hljs-cdata {
+    color: #999;
+    font-weight: bold;
+  }
+
+  .hljs-deletion {
+    background: #fdd;
+  }
+
+  .hljs-addition {
+    background: #dfd;
+  }
+
+  .diff .hljs-change {
+    background: #0086b3;
+  }
+
+  .hljs-chunk {
+    color: #aaa;
+  }
+
+  a, a:visited {color: #33cc99;}
+  .pagination a {color: #33cc99;}
+  .gist .gist-file .gist-meta a:visited {color: #33cc99 !important;}
+
+  a:focus, a:hover {color: #178b6b;}
+  h1.post-title a:focus, h1.post-title a:hover, h1.blog-title a:focus, h1.blog-title a:hover {color: #178b6b;}
+  .older-posts:hover, .newer-posts:hover {color: #178b6b;}
+
+  .backtotop {
+    top: 0 !important;
+    float: none !important;
+  }
+  .tag.none{
+    display: none;
+  }
+  h1.blog-title {
+    margin-top: 2rem !important;
+  }
+  h1.blog-subtitle {
+    margin-bottom: 2rem !important;
+  }
 </style>

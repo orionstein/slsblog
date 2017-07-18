@@ -1,14 +1,27 @@
-{{#partial page}}
-  <main class="content" role="main">
-    <article class="{{blog.post_class}}">
-      <header>
-        <h1 class="post-title">{{{post.title}}}</h1>
-      </header>
-      <section class="post-content">
-      {{{post.content}}}
-      <br>
-      </section>
-    </article>
-  </main>
-{{/partial}}
-{{~> layout~}}
+{{#> layout }}
+  {{#*inline "page"}}
+    <main class="content" role="main">
+      <article class="{{blog.post_class}}">
+        <header>
+          <h1 class="post-title">{{{post.title}}}</h1>
+        </header>
+        <section class="post-content">
+        {{{post.content}}}
+        <br>
+        </section>
+        <section class="post-tags">
+          {{#if post.tags}}
+            <div class="post-meta tags"><i class="fa fa-fw fa-tags"></i> 
+              {{#each post.tags as |tag| ~}}
+                <a class="tag {{tag}}" href="/tag/{{tag}}">{{tag}}</a>
+              {{/each~}}
+            </div>
+          {{/if}}
+        </section>
+        <section class="share">
+          <p class="backtotop"><a data-scroll href="#site-head"><i class="fa fa-lg fa-fw fa-angle-double-up"></i></a><a data-scroll class="backtotoptext" href="#site-head"> Back to top</a></p>
+        </section>
+      </article>
+    </main>
+  {{/inline}}
+{{/layout}}

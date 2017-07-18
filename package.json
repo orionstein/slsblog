@@ -1,0 +1,17 @@
+{
+  "name": "slsblog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:orionstein/slsblog.git",
+    "type": "git"
+  },
+  "author": "Orion Free <ofree@upperquadrant.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "moment": "^2.18.1",
+    "ramda": "^0.24.1",
+    "uuid-lib": "^0.0.6"
+  }
+}

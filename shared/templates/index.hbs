@@ -1,17 +1,40 @@
-{{#partial page}}
-  <main class="content" role="main">
-    {{#each posts}}
-      <article class="preview">
-          <header>
-              <h1 class="post-title"><a href="/page/{{url}}">{{{title}}}</a></h1>
-              <div class="post-meta"><time datetime="{{date}}">{{date}}</time></div>
-          </header>
-          <section class="post-excerpt">
-            <a class="excerptlink" href="/page/{{url}}"><p>{{snippet}}&hellip;</p></a>
-            <p class="readmore"><a href="/page/{{url}}">Keep reading <i class="fa fa-angle-double-right" style="padding-left: 5px;"></i></a></p>
-          </section>
-      </article>
-      {{/each~}}
-  </main>
-{{/partial}}
-{{~> layout~}}
+{{#> layout }}
+  {{#*inline "page"}}
+    <main class="content" role="main">
+      {{#if blog.tagName}}
+         <h3 class="posts-tagged"><i class="fa fa-fw fa-tag"></i> {{blog.tagName}}</h3>
+      {{/if}}
+      {{#each posts as |p| ~}}
+        <article class="preview">
+            <header>
+                <h1 class="post-title"><a href="/page/{{p.url}}">{{{p.title}}}</a></h1>
+                <div class="post-meta"><time datetime="{{p.date}}">{{p.date}}</time></div>
+            </header>
+            <section class="post-excerpt">
+              <a class="excerptlink" href="/page/{{p.url}}"><p>{{p.snippet}}&hellip;</p></a>
+              <p class="readmore"><a href="/page/{{p.url}}">Keep reading <i class="fa fa-angle-double-right" style="padding-left: 5px;"></i></a></p>
+            </section>
+        </article>
+        {{/each~}}
+          <nav class="pagination" role="pagination">
+            {{#with blog}}
+              {{#if hasPrev}}
+                {{#if tagName}}
+                  <a class="newer-posts" href="/tag/{{tagName}}?from={{prevId}}"><i class="fa fa-chevron-circle-left"></i> Newer</a>
+                {{else}}
+                  <a class="newer-posts" href="/?from={{prevId}}"><i class="fa fa-chevron-circle-left"></i> Newer</a>
+                {{/if}}
+              {{/if}}
+              <span class="page-number"></span>
+              {{#if hasMore}}
+                {{#if tagName}}
+                  <a class="older-posts" href="/tag/{{tagName}}?from={{nextId}}">Older <i class="fa fa-chevron-circle-right"></i></a>
+                {{else}}
+                  <a class="older-posts" href="/?from={{nextId}}">Older <i class="fa fa-chevron-circle-right"></i></a>
+                {{/if}}
+              {{/if}}
+            {{/with}}
+          </nav>
+    </main>
+  {{/inline}}
+{{/layout}}

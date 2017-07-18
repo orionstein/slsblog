@@ -1,11 +1,10 @@
-var aws = require('aws-sdk');
-var bluebird = require('bluebird');
+var aws = require('aws-sdk')
+var bluebird = require('bluebird')
 
-var ddb = new aws.DynamoDB(
-  {
-    region: "us-east-1",
-  });
+var ddb = new aws.DynamoDB({
+  region: 'us-east-1',
+})
 
-var promiseDDB = bluebird.promisifyAll(ddb);
+var promiseDDB = bluebird.promisifyAll(ddb, { suffix: 'Blue' })
 
-module.exports = promiseDDB;
+module.exports = promiseDDB

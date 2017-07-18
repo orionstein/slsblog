@@ -15,11 +15,13 @@ use glob::glob;
 fn build(call: Call) -> JsResult<JsString> {
     let scope = call.scope;
     let mut handlebars = Handlebars::new();
-    for entry in glob("./templates/**/*.hbs").expect("Failed to read glob pattern") { 
+    println!("step1");
+    for entry in glob("./shared/templates/**/*.hbs").expect("Failed to read glob pattern") { 
 	    match entry {
 		    Ok(path) => {
 			    let template_name = path.file_stem().unwrap().to_string_lossy().into_owned();
 			    let template_slice : &str = &template_name[..]; 
+                println!("{:?}", template_name);
 			    handlebars.register_template_file(template_slice, path).ok().unwrap();
 		    },
 			    Err(e) => println!("{:?}", e)
@@ -36,6 +38,7 @@ fn build(call: Call) -> JsResult<JsString> {
         let nameString = try!(JsValue::to_string((**entry), scope));
         let nameExtract = (*nameString).value();
         let item = try!(blog.get(scope, nameString));
+        //TODO: fix bools being cast to string
         let bItem = try!(JsValue::to_string((*item), scope));
         let bItemExtract = (*bItem).value();
         blogData.insert(nameExtract.to_string(), bItemExtract.to_json());
@@ -88,8 +91,12 @@ fn build(call: Call) -> JsResult<JsString> {
     data.insert("posts".to_string(), postArrData.to_json());
     let dataJson = data.to_json();
 
+    println!("step2");
+                println!("{:?}", dataJson);
+
     let pageString = handlebars.render("index", &dataJson).ok().unwrap();
     let pageSlice : &str = &pageString[..];
+    println!("step3");
     Ok(JsString::new(scope, pageSlice).unwrap())
 }
 

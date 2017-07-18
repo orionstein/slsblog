@@ -25,7 +25,7 @@ fn build(call: Call) -> JsResult<JsString> {
     let scope = call.scope;
     let mut handlebars = Handlebars::new();
 
-    for entry in glob("./templates/**/*.hbs").expect("Failed to read glob pattern") { 
+    for entry in glob("./shared/templates/**/*.hbs").expect("Failed to read glob pattern") { 
 	    match entry {
 		    Ok(path) => {
 			    let template_name = path.file_stem().unwrap().to_string_lossy().into_owned();
@@ -51,20 +51,41 @@ fn build(call: Call) -> JsResult<JsString> {
       }
     }
 
-    let postData = try!(try!(call.arguments.require(scope, 1)).check::<JsString>());
-    let qq : &str = &postData.value()[..];
+    let postContent = try!(try!(call.arguments.require(scope, 1)).check::<JsString>());
+    let qq : &str = &postContent.value()[..];
     let postDataC = markdown::to_html(qq);
     let v = &postDataC[..];
     let un = unescape(v);
 
+    let postTitle = try!(try!(call.arguments.require(scope, 2)).check::<JsString>());
+    let TitleString : &str = &postTitle.value()[..];
+
+    let mut tagVec = Vec::new();
+    let postTags = try!(try!(call.arguments.require(scope, 3)).check::<JsArray>());
+    let postTagsIter = (postTags).to_vec(scope);
+    for tags in &postTagsIter {
+        for tag in &* tags {
+            let nameString = try!(JsValue::to_string((**tag), scope));
+            let nameExtract = (*nameString).value();
+            tagVec.push(nameExtract.to_string())
+        }
+    }
+
+
+
     let mut postData: BTreeMap<String, Json> = BTreeMap::new();
-    postData.insert("title".to_string(), "base0".to_json());
+    postData.insert("title".to_string(), TitleString.to_json());
     postData.insert("content".to_string(), un.to_json());
+    if (tagVec.len() > 0) {
+        postData.insert("tags".to_string(), tagVec.to_json());
+    }
 
     let mut data: BTreeMap<String, Json> = BTreeMap::new();
     data.insert("blog".to_string(), blogData.to_json());
     data.insert("post".to_string(), postData.to_json());
     let dataJson = data.to_json();
+    println!("step2");
+    println!("{:?}", dataJson);
 
     let pageString = handlebars.render("page", &dataJson).ok().unwrap();
     let pageSlice : &str = &pageString[..];

@@ -1,0 +1,16 @@
+[package]
+name = "abc"
+version = "0.1.0"
+authors = ["Orion Free <ofree@upperquadrant.com>"]
+license = "MIT"
+build = "build.rs"
+
+[lib]
+name = "abc"
+crate-type = ["dylib"]
+
+[build-dependencies]
+neon-build = "0.1.18"
+
+[dependencies]
+neon = "0.1.18"
