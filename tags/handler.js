@@ -82,7 +82,6 @@ module.exports.main = (event, context, cb) => {
   return db.queryBlue(params).then(function(data) {
     //Fn to flatten posts from dynamodb return
     //
-    console.log('dt', JSON.stringify(data))
 
     const formatInv = ramda.invoker(1, 'format')
 
@@ -113,7 +112,6 @@ module.exports.main = (event, context, cb) => {
           },
         },
       }
-      console.log('jjj', getItemParams)
       return db.getItemBlue(getItemParams)
     }
 
@@ -170,13 +168,7 @@ module.exports.main = (event, context, cb) => {
       //otherwise push dummy promise - if db is empty, don't run breaking calls
       // let promArr = [getPosts(data)]
       return bb.all(getPosts(data)).then(function(allposts) {
-        console.log('GOT')
-        console.log('allposts', allposts)
-
         const posts = pullFromPosts(allposts)
-
-        console.log(fromDate)
-        console.log(prevDate)
 
         const promArr = []
         if (!ramda.isNil(fromDate)) {
@@ -191,7 +183,6 @@ module.exports.main = (event, context, cb) => {
         }
 
         return bb.all(promArr).then(function(results) {
-          console.log('res', JSON.stringify(results))
           //If next results, set next id and flag
           //Otherwise, delete flag, for lamda cache fixing
           if (prevDate && results[0] && results[0].Count > 0) {
@@ -222,13 +213,8 @@ module.exports.main = (event, context, cb) => {
             delete config.blog.prevId
           }
 
-          console.log('aaaaah?')
-          console.log('aaaaaht?', config.blog)
-          console.log('aaaaahtaa?', posts)
-
           //Run rust plugin for html rendering, and return html result
           const html = blogmain.build(config.blog, posts)
-          console.log('aaagtt', html)
           return context.succeed(html)
         })
       })

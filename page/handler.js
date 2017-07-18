@@ -8,7 +8,6 @@ const bb = require('bluebird')
 
 // Your first function handler
 module.exports.main = (event, context, cb) => {
-  console.log('eee', JSON.stringify(event))
   //Get post url from path
   const getUrl = ramda.path(['path', 'id'])(event)
 
@@ -29,7 +28,6 @@ module.exports.main = (event, context, cb) => {
     Limit: 1,
   }
   return db.queryBlue(params).then(results => {
-    console.log('res', JSON.stringify(results))
     const buildPostItem = item => {
       return {
         date: ramda.path(['Date', 'N'])(item),
@@ -50,7 +48,6 @@ module.exports.main = (event, context, cb) => {
       ramda.nth(0)
     )
     const post = pullFromPosts(results)
-    console.log('post', JSON.stringify(post))
     // let ppost = {
     //   id: '123',
     //   content:

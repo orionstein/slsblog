@@ -78,11 +78,8 @@ module.exports.main = (event, context, cb) => {
     const formatInv = ramda.invoker(1, 'format')
     const buildPostItem = item => {
       const date = ramda.path(['Date', 'N'])(item)
-      console.log('aw', date)
       const mdate = moment(parseInt(date))
-      console.log('am', mdate)
       const aa = mdate.format('MMMM Do YYYY')
-      console.log('aa', aa)
       return {
         date: ramda.pipe(
           ramda.path(['Date', 'N']),
